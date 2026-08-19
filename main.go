@@ -1,28 +1,48 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	"sync"
-	"sync/atomic"
+	"os"
+	"strconv"
+	"strings"
 )
 
-func main() {
-	var counter int64
-	var wg sync.WaitGroup
+func Filter[T any](s []T, keep func(T) bool) []T {
+	elem := make([]T, 0)
 
-	const numGoroutines = 100
-	const increments = 100
-
-	wg.Add(numGoroutines)
-	for i := 0; i < numGoroutines; i++ {
-		go func() {
-			defer wg.Done()
-			for j := 0; j < increments; j++ {
-				atomic.AddInt64(&counter, 1)
-			}
-		}()
+	for _, i := range s {
+		if keep(i) {
+			elem = append(elem, i)
+		}
 	}
 
-	wg.Wait()
-	fmt.Println(counter)
+	return elem
+}
+
+// Non-generic fallback:
+func filterEvens(s []int) []int {
+	var r []int
+	for _, n := range s {
+		if n%2 == 0 {
+			r = append(r, n)
+		}
+	}
+	return r
+}
+
+func main() {
+	sc := bufio.NewScanner(os.Stdin)
+	sc.Scan()
+	nums := []int{}
+	for _, f := range strings.Fields(sc.Text()) {
+		n, _ := strconv.Atoi(f)
+		nums = append(nums, n)
+	}
+	evens := filterEvens(nums)
+	parts := make([]string, len(evens))
+	for i, v := range evens {
+		parts[i] = strconv.Itoa(v)
+	}
+	fmt.Println(strings.Join(parts, " "))
 }
