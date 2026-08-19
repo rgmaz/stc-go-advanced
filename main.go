@@ -20,6 +20,13 @@ func Filter[T any](s []T, keep func(T) bool) []T {
 	return elem
 }
 
+func isEven(n int) bool {
+	if n%2 == 0 {
+		return true
+	}
+	return false
+}
+
 // Non-generic fallback:
 func filterEvens(s []int) []int {
 	var r []int
@@ -39,7 +46,8 @@ func main() {
 		n, _ := strconv.Atoi(f)
 		nums = append(nums, n)
 	}
-	evens := filterEvens(nums)
+	// evens := filterEvens(nums)
+	evens := Filter(nums, isEven)
 	parts := make([]string, len(evens))
 	for i, v := range evens {
 		parts[i] = strconv.Itoa(v)
