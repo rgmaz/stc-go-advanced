@@ -1,42 +1,24 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strconv"
-	"strings"
+	"reflect"
 )
 
-func FilterInts(s []int, keep func(int) bool) []int {
-	var r []int
-	for _, v := range s {
-		if keep(v) {
-			r = append(r, v)
-		}
-	}
-	return r
+type Person struct {
+	Name string
+	Age  int
 }
 
 func main() {
-	sc := bufio.NewScanner(os.Stdin)
-	if !sc.Scan() {
-		return
-	}
+	p := Person{Name: "Ada", Age: 36}
 
-	var nums []int
-	for _, f := range strings.Fields(sc.Text()) {
-		n, _ := strconv.Atoi(f)
-		nums = append(nums, n)
-	}
+	t := reflect.TypeOf(p)
+	v := reflect.ValueOf(p)
 
-	evens := FilterInts(nums, func(n int) bool {
-		return n%2 == 0
-	})
-
-	parts := make([]string, len(evens))
-	for i, v := range evens {
-		parts[i] = strconv.Itoa(v)
+	for i := 0; i < t.NumField(); i++ {
+		field := t.Field(i)
+		val := v.Field(i)
+		fmt.Printf("%s: %v\n", field.Name, val.Interface())
 	}
-	fmt.Println(strings.Join(parts, " "))
 }
