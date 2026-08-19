@@ -9,30 +9,10 @@ import (
 )
 
 func Filter[T any](s []T, keep func(T) bool) []T {
-	elem := make([]T, 0)
-
-	for _, i := range s {
-		if keep(i) {
-			elem = append(elem, i)
-		}
-	}
-
-	return elem
-}
-
-func isEven(n int) bool {
-	if n%2 == 0 {
-		return true
-	}
-	return false
-}
-
-// Non-generic fallback:
-func filterEvens(s []int) []int {
-	var r []int
-	for _, n := range s {
-		if n%2 == 0 {
-			r = append(r, n)
+	var r []T
+	for _, v := range s {
+		if keep(v) {
+			r = append(r, v)
 		}
 	}
 	return r
@@ -40,14 +20,20 @@ func filterEvens(s []int) []int {
 
 func main() {
 	sc := bufio.NewScanner(os.Stdin)
-	sc.Scan()
-	nums := []int{}
+	if !sc.Scan() {
+		return
+	}
+
+	var nums []int
 	for _, f := range strings.Fields(sc.Text()) {
 		n, _ := strconv.Atoi(f)
 		nums = append(nums, n)
 	}
-	// evens := filterEvens(nums)
-	evens := Filter(nums, isEven)
+
+	evens := Filter(nums, func(n int) bool {
+		return n%2 == 0
+	})
+
 	parts := make([]string, len(evens))
 	for i, v := range evens {
 		parts[i] = strconv.Itoa(v)
