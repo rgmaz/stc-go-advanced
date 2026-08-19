@@ -1,27 +1,28 @@
 package main
 
-import "fmt"
-
-func add(a, b int) int {
-	return a + b
-}
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+)
 
 func main() {
-	cases := []struct {
-		name string
-		a, b int
-		want int
-	}{
-		{name: "two positives", a: 2, b: 3, want: 5},
-		{name: "with zero", a: 0, b: 7, want: 7},
-		{name: "with negative", a: -2, b: -3, want: -5},
+	sc := bufio.NewScanner(os.Stdin)
+	sc.Scan()
+	n, _ := strconv.Atoi(sc.Text())
+
+	squares := make([]int, 0, n)
+	for i := 0; i < n; i++ {
+		sc.Scan()
+		v, _ := strconv.Atoi(sc.Text())
+		squares = append(squares, v*v)
 	}
-	for _, c := range cases {
-		got := add(c.a, c.b)
-		if got == c.want {
-			fmt.Printf("%s: PASS\n", c.name)
-		} else {
-			fmt.Printf("%s: FAIL got=%v want=%v\n", c.name, got, c.want)
-		}
+
+	parts := make([]string, len(squares))
+	for i, s := range squares {
+		parts[i] = strconv.Itoa(s)
 	}
+	fmt.Println(strings.Join(parts, " "))
 }
