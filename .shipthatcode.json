@@ -1,0 +1,38 @@
+{
+  "course": "go-advanced",
+  "language": "go",
+  "language_id": 60,
+  "entrypoint": "main.go",
+  "version": 1,
+  "content_hash": "84c45faa73971895",
+  "lessons": [
+    {
+      "slug": "context",
+      "tests_hash": "c14198f9d053"
+    },
+    {
+      "slug": "sync-primitives",
+      "tests_hash": "f5ac5eaa80e9"
+    },
+    {
+      "slug": "generics",
+      "tests_hash": "5277345ecdb6"
+    },
+    {
+      "slug": "reflection",
+      "tests_hash": "736d2e58f1e6"
+    },
+    {
+      "slug": "error-wrapping",
+      "tests_hash": "8fd69ef28e3c"
+    },
+    {
+      "slug": "testing",
+      "tests_hash": "bdbac2d887fe"
+    },
+    {
+      "slug": "performance",
+      "tests_hash": "e5944d03ef5a"
+    }
+  ]
+}
