@@ -8,8 +8,8 @@ import (
 	"strings"
 )
 
-func Filter[T any](s []T, keep func(T) bool) []T {
-	var r []T
+func FilterInts(s []int, keep func(int) bool) []int {
+	var r []int
 	for _, v := range s {
 		if keep(v) {
 			r = append(r, v)
@@ -30,7 +30,7 @@ func main() {
 		nums = append(nums, n)
 	}
 
-	evens := Filter(nums, func(n int) bool {
+	evens := FilterInts(nums, func(n int) bool {
 		return n%2 == 0
 	})
 
